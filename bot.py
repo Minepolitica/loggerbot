@@ -1,10 +1,12 @@
+import configparser
 import discord
 from discord.ext import commands
 
+config = configparser.ConfigParser()
+config.read("credentials.cfg")
 
-bot_token = "Your_bot_token"
-
-log_channel_id = "channel_id"
+bot_token = config.get("default", "bot_token")
+log_channel_id = config.get("default", "log_channel_id")
 
 intents = discord.Intents.default()
 intents.message_content = True
@@ -17,8 +19,6 @@ intents.guild_reactions = True
 
 
 bot = commands.Bot(command_prefix="/", intents=intents)
-
-
 
 @bot.event
 # Printing when bot properly starts
