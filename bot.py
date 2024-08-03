@@ -15,7 +15,6 @@ intents.voice_states = True
 intents.guilds = True
 intents.invites = True
 intents.members = True
-intents.guild_reactions = True
 
 
 bot = commands.Bot(command_prefix="/", intents=intents)
@@ -33,7 +32,7 @@ async def log_to_channel(embed):
     else:
         print("Log channel not found.")
 
-# Creating the embed
+# Creating the embed itself
 def create_embed(title, description, color):
     embed = discord.Embed(title=title, description=description, color=color)
     embed.set_footer(text="Logged by your bot")
@@ -195,7 +194,39 @@ async def on_invite_create(invite):
     await log_to_channel(embed)
 
 @bot.event
-async def channel_update(ch_update):
-    pass
+async def on_guild_channel_update(before, after):
+    guild = after.guild
+
+    embed = create_embed(
+        title="Channel Updated",
+        description=(
+            f"**Date:** {discord.utils.utcnow().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+            f"**Server:** {guild.name} (ID: {guild.id})\n\n"
+            f"**Channel:** {before.name} (ID: {before.id})\n\n"
+            f"**Before:** {before}\n\n"
+            f"**After:** {after}\n"
+        ),
+        color=discord.Color.from_rgb(0,255,255)  # Cyan for channel updates
+    )
+
+    await log_to_channel(embed)
+
+@bot.event
+async def on_guild_role_update(before, after):
+    guild = after.guild
+
+    embed = create_embed(
+        title="Role Updated",
+        description=(
+            f"**Date:** {discord.utils.utcnow().strftime('%Y-%m-%d %H:%M:%S')}\n\n"
+            f"**Server:** {guild.name} (ID: {guild.id})\n\n"
+            f"**Role:** {before.name} (ID: {before.id})\n\n"
+            f"**Before:** {before}\n\n"
+            f"**After:** {after}\n"
+        ),
+        color=discord.Color.magenta()  # Pink for role updates
+    )
+
+    await log_to_channel(embed)
 
 bot.run(bot_token)
