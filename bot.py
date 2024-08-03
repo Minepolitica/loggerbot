@@ -102,7 +102,6 @@ async def on_message_edit(before, after):
             f"**Message ID:** {before.id}\n\n"
             f"**Before Edit:** {before.content}\n\n"
             f"**After Edit:** {after.content}\n"
-            "test 2 bruh"
         ),
         color=discord.Color.orange()  # Orange for message edited
     )
