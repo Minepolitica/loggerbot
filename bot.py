@@ -17,7 +17,10 @@ intents.invites = True
 intents.members = True
 
 
+
 bot = commands.Bot(command_prefix="/", intents=intents)
+
+
 
 @bot.event
 # Printing when bot properly starts
@@ -171,6 +174,8 @@ async def on_voice_state_update(member, before, after):
 
         await log_to_channel(embed)
 
+
+
 @bot.event
 async def on_invite_create(invite):
     guild = invite.guild
@@ -192,6 +197,8 @@ async def on_invite_create(invite):
 
     await log_to_channel(embed)
 
+
+
 @bot.event
 async def on_guild_channel_update(before, after):
     guild = after.guild
@@ -209,6 +216,8 @@ async def on_guild_channel_update(before, after):
     )
 
     await log_to_channel(embed)
+
+
 
 @bot.event
 async def on_guild_role_update(before, after):
